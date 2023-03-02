@@ -1,0 +1,26 @@
+.ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ul li {
+  margin-right: 80px;
+}
+.ul li h5 {
+  text-align: center;
+}
+
+.price {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.price p {
+  margin-top: 5px;
+}
