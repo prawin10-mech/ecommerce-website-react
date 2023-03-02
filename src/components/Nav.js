@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import CartButton from "./CartButton";
 
 const Nav = () => {
-  const [isCartShow, setIsCartShow] = useState(false);
   return (
     <>
       <div className="bg-dark d-flex flex-row mr-3 justify-content-md-center text-light position-fixed w-100">

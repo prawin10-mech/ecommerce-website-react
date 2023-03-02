@@ -1,10 +1,30 @@
 import React from "react";
+import CartItems from "./CartItems";
 
-const Cart = () => {
+const Cart = (props) => {
   return (
-    <div className="position-absolute text-white top-0 end-0 py-5">
-      how are you
-    </div>
+    <>
+      <div className="position-fixed text-dark top-0 end-0 mx-4 mt-5 py-5 bg-light">
+        <button
+          className="position-relative text-dark top-0 start-100"
+          onClick={props.onClick}
+        >
+          X
+        </button>
+        <table>
+          <thead className="fw-bolder mt-0">
+            <tr className="px-5">
+              <td>Item</td>
+              <td>Price</td>
+              <td>Quantity</td>
+            </tr>
+          </thead>
+          <tbody>
+            <CartItems />
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 
