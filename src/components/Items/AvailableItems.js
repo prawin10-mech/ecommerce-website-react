@@ -1,5 +1,5 @@
 import React from "react";
-import { productsArr } from "../constants";
+import { productsArr } from "../../constants";
 import Product from "./Product";
 import classes from "./AvailableItems.module.css";
 
@@ -8,6 +8,7 @@ const AvailableItems = () => {
     return (
       <ul className={classes.ul}>
         <Product
+          key={item.id.toString()}
           id={item.id}
           title={item.title}
           imageUrl={item.imageUrl}
