@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button } from "react-bootstrap";
 import Cart from "./Cart/Cart";
+import CartContext from "../store/CartContext";
 
 const CartButton = () => {
+  const cartCtx = useContext(CartContext);
   const [isCartShow, setIsCartShow] = useState(false);
 
   const cartButtonHandler = () => {
@@ -18,7 +20,7 @@ const CartButton = () => {
         className="position-sticky top-0 start-100 bg-white text-black zindex-tooltip"
         onClick={cartButtonHandler}
       >
-        CART
+        CART<span>{cartCtx.totalQuantity}</span>
       </Button>
       {isCartShow && <Cart onClick={closeCartButtonHandler} />}
     </>

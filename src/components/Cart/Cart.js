@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import CartItems from "./CartItems";
 
 const Cart = (props) => {
@@ -6,7 +6,7 @@ const Cart = (props) => {
     <>
       <div className="position-fixed text-dark top-0 end-0 mx-4 mt-5 py-5 bg-light">
         <button
-          className="position-relative text-dark top-0 start-100"
+          className="position-relative text-dark top-0 end-0"
           onClick={props.onClick}
         >
           X

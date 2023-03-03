@@ -1,11 +1,12 @@
-import React from "react";
-import { cartElements } from "../../constants";
+import React, { useContext } from "react";
 import { Button } from "react-bootstrap";
+import CartContext from "../../store/CartContext";
 
 const CartItems = () => {
-  let cartItems = cartElements.map((cartElement) => {
+  const cartCtx = useContext(CartContext);
+  let cartItems = cartCtx.items.map((cartElement) => {
     return (
-      <tr className="text-dark">
+      <tr className="text-dark" key={cartElement.title}>
         <td>
           <img
             src={cartElement.imageUrl}
