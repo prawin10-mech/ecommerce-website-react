@@ -8,10 +8,22 @@ import CartProvider from "./store/CartProvider";
 
 //routes
 import About from "./components/Routes/About";
+import Home from "./components/Routes/Home";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: (
+      <CartProvider>
+        <Nav />
+        <Title />
+        <Home />
+        <Footer />
+      </CartProvider>
+    ),
+  },
+  {
+    path: "store",
     element: (
       <CartProvider>
         <Nav />

@@ -1,6 +1,5 @@
 import React from "react";
 import BandMembers from "../../Assests/Band-Members.png";
-import "./About.css";
 
 const About = () => {
   return (
