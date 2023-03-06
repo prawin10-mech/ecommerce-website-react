@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AvailableItems from "./AvailableItems";
 import classes from "./Items.module.css";
 import axios from "axios";
+import AddItem from "../Items/AddItems";
 
 const Item = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,8 +16,11 @@ const Item = () => {
   return (
     <>
       {!isLoading && (
-        <div className={classes.items}>
-          <AvailableItems />
+        <div>
+          <AddItem />
+          <div className={classes.items}>
+            <AvailableItems />
+          </div>
         </div>
       )}
 
