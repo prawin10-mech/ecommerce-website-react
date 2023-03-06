@@ -10,6 +10,7 @@ import CartProvider from "./store/CartProvider";
 import About from "./components/Routes/About";
 import Home from "./components/Routes/Home";
 import Contact from "./components/Routes/Contact";
+import ProductDetails from "./components/Routes/ProductDetails";
 
 const router = createBrowserRouter([
   {
@@ -56,9 +57,24 @@ const router = createBrowserRouter([
       </CartProvider>
     ),
   },
+  {
+    path: "products/:productId",
+    element: (
+      <CartProvider>
+        <Nav />
+        <Title />
+        <ProductDetails />
+        <Footer />
+      </CartProvider>
+    ),
+  },
 ]);
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
 export default App;

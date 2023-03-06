@@ -3,6 +3,7 @@ import classes from "./AvailableItems.module.css";
 import { Button } from "react-bootstrap";
 import CartContext from "../../store/CartContext";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Product = (props) => {
   const cartCtx = useContext(CartContext);
@@ -15,13 +16,19 @@ const Product = (props) => {
     await axios.post(`http://localhost:3000/admin/delete-product/${productId}`);
     console.log(props.id);
   };
-
   return (
     <li key={props.id.toString()}>
       <h5>{props.title}</h5>
-      <div className="bg-image hover-zoom">
-        <img src={props.imageUrl} alt={props.title} width={"250px"} />
-      </div>
+      <Link to={`/products/${props.id}`}>
+        <div className="bg-image hover-zoom">
+          <img
+            src={props.imageUrl}
+            alt={props.title}
+            width={"250px"}
+            height={"300px"}
+          />
+        </div>
+      </Link>
       <div className={classes.price}>
         <p>${props.price}</p>
         <Button onClick={addToCartHandler}>Add To Cart</Button>
