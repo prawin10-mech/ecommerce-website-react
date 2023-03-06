@@ -9,6 +9,7 @@ import CartProvider from "./store/CartProvider";
 //routes
 import About from "./components/Routes/About";
 import Home from "./components/Routes/Home";
+import Contact from "./components/Routes/Contact";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,17 @@ const router = createBrowserRouter([
         <Nav />
         <Title />
         <About />
+        <Footer />
+      </CartProvider>
+    ),
+  },
+  {
+    path: "contact",
+    element: (
+      <CartProvider>
+        <Nav />
+        <Title />
+        <Contact />
         <Footer />
       </CartProvider>
     ),

@@ -15,6 +15,10 @@ const Nav = () => {
         <NavLink to="/about" className="text-white text-decoration-none m-1">
           <h4>ABOUT</h4>
         </NavLink>
+        <NavLink to="/contact" className="text-white text-decoration-none m-1">
+          <h4>CONTACT</h4>
+        </NavLink>
+
         <CartButton />
       </div>
     </>
