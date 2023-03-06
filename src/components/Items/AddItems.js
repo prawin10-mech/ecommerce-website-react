@@ -1,15 +1,15 @@
 import { Button } from "react-bootstrap";
 import React, { useState } from "react";
+import axios from "axios";
 
-const AddItem = () => {
+const AddItem = (props) => {
   const [title, setTitle] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const addMovieFormHandler = () => {
-    console.log(title);
+  const addMovieFormHandler = async () => {
     const obj = { title, imageUrl, price, description };
-    console.log(obj);
+    await axios.post("http://localhost:3000/admin/add-product", obj);
   };
   return (
     <form
@@ -51,7 +51,6 @@ const AddItem = () => {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-
       <Button onClick={addMovieFormHandler}>Add Item</Button>
     </form>
   );

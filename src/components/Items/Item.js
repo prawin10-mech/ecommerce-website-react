@@ -3,9 +3,12 @@ import AvailableItems from "./AvailableItems";
 import classes from "./Items.module.css";
 import axios from "axios";
 import AddItem from "../Items/AddItems";
+import { Button } from "react-bootstrap";
 
-const Item = () => {
+const Item = (props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [addItemBtn, setAddItemBtn] = useState(false);
+
   const fetchData = async () => {
     setIsLoading(true);
     let response = await axios.get("http://localhost:3000/products");
@@ -13,11 +16,19 @@ const Item = () => {
     console.log(response);
     setIsLoading(false);
   };
+  const addItemHandler = async () => {
+    setAddItemBtn(true);
+  };
   return (
     <>
       {!isLoading && (
         <div>
-          <AddItem />
+          {!addItemBtn && (
+            <Button onClick={addItemHandler} className="m-auto">
+              Add Item
+            </Button>
+          )}
+          {addItemBtn && <AddItem />}
           <div className={classes.items}>
             <AvailableItems />
           </div>

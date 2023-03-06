@@ -16,7 +16,7 @@ const AvailableItems = () => {
       setError("null");
       setIsLoading(false);
       let products = await axios.get("http://localhost:3000/products");
-      products = products.data.products;
+      products = products.data;
       setIsLoading(true);
       console.log(products);
       setItems(products);
@@ -38,6 +38,7 @@ const AvailableItems = () => {
               title={item.title}
               imageUrl={item.imageUrl}
               price={item.price}
+              onSetItems={setItems}
             />
           )}
         </ul>
