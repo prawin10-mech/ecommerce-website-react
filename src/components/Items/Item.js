@@ -1,26 +1,25 @@
 import React, { useState } from "react";
 import AvailableItems from "./AvailableItems";
 import classes from "./Items.module.css";
-import { Button } from "react-bootstrap";
+import axios from "axios";
 
 const Item = () => {
   const [isLoading, setIsLoading] = useState(false);
   const fetchData = async () => {
     setIsLoading(true);
-    let response = await fetch("https://swapi.dev/api/films");
-    response = response.json();
-    response = response.results;
+    let response = await axios.get("http://localhost:3000/products");
+    response = response.data.products;
     console.log(response);
     setIsLoading(false);
   };
   return (
     <>
-      <Button onClick={fetchData}>Fetch data</Button>
       {!isLoading && (
         <div className={classes.items}>
           <AvailableItems />
         </div>
       )}
+
       {isLoading && <p>loading.....</p>}
     </>
   );
