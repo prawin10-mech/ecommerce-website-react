@@ -40,6 +40,10 @@ const AuthForm = () => {
     const response = await axios.post("http://localhost:3000/admin/login", obj);
     authCtx.login(response.data.token);
     history.push("/");
+    setTimeout(() => {
+      // Remove the token from the localStorage when it expires
+      localStorage.removeItem("jwt-token");
+    }, 300000);
   };
   return (
     <>
