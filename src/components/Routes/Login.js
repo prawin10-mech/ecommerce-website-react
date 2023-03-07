@@ -1,12 +1,11 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import axios from "axios";
-import { Prompt, useHistory } from "react-router-dom";
-import AuthContext from "../../store/auth-context";
+import { useNavigate } from "react-router-dom";
 
-import classes from "./AuthForm.module.css";
+import classes from "./Login.module.css";
 
-const AuthForm = () => {
-  const history = useHistory();
+const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
@@ -14,7 +13,8 @@ const AuthForm = () => {
 
   const [error, setError] = useState(false);
 
-  const authCtx = useContext(AuthContext);
+  const [loginSuccess, setLoginSuccess] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -34,26 +34,28 @@ const AuthForm = () => {
 
   const loginHandler = async (e) => {
     e.preventDefault();
-    const obj = { email, password };
-    setEmail("");
-    setPassword("");
-    const response = await axios.post("http://localhost:3000/admin/login", obj);
-    authCtx.login(response.data.token);
-    history.push("/");
-    setTimeout(() => {
-      // Remove the token from the localStorage when it expires
-      localStorage.removeItem("token");
-    }, 300000);
+    try {
+      const obj = { email, password };
+      const response = await axios.post(
+        "http://localhost:3000/admin/login",
+        obj
+      );
+      if (response.status === 200) {
+        localStorage.setItem("token", response.data.token);
+        setLoggedIn(true);
+        setEmail("");
+        setPassword("");
+        setLoginSuccess(true);
+        navigate("/store");
+      }
+    } catch (err) {
+      console.log("failed");
+      setLoginSuccess(false);
+      setLoggedIn(false);
+    }
   };
   return (
     <>
-      <Prompt
-        when={error}
-        message={(loaction) => {
-          console.log("Prompt message", error);
-          return "User already exists";
-        }}
-      />
       <section className={classes.auth}>
         <h1>{isLogin ? "Login" : "Sign Up"}</h1>
 
@@ -82,6 +84,9 @@ const AuthForm = () => {
               required
             />
           </div>
+          {!loginSuccess && (
+            <p className="text-danger">Please enter valid email or password</p>
+          )}
           <div className={classes.actions}>
             {!isLogin && (
               <button type="submit" onClick={signupHandler}>
@@ -90,7 +95,7 @@ const AuthForm = () => {
             )}
             {isLogin && (
               <button type="submit" onClick={loginHandler}>
-                Login
+                {loggedIn ? "LOGOUT" : "LOGIN"}
               </button>
             )}
             {!isLogin && isSignUp && (
@@ -112,4 +117,4 @@ const AuthForm = () => {
   );
 };
 
-export default AuthForm;
+export default Login;

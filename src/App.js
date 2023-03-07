@@ -11,6 +11,7 @@ import About from "./components/Routes/About";
 import Home from "./components/Routes/Home";
 import Contact from "./components/Routes/Contact";
 import ProductDetails from "./components/Routes/ProductDetails";
+import Login from "./components/Routes/Login";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,16 @@ const router = createBrowserRouter([
         <Nav />
         <Title />
         <Contact />
+        <Footer />
+      </CartProvider>
+    ),
+  },
+  {
+    path: "login",
+    element: (
+      <CartProvider>
+        <Title />
+        <Login />
         <Footer />
       </CartProvider>
     ),

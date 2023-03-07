@@ -18,6 +18,9 @@ const Nav = () => {
         <NavLink to="/contact" className="text-white text-decoration-none m-1">
           <h4>CONTACT</h4>
         </NavLink>
+        <NavLink to="/login" className="text-white text-decoration-none m-1">
+          <h4>LOGIN</h4>
+        </NavLink>
 
         <CartButton />
       </div>
