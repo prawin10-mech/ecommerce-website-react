@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import classes from "./Login.module.css";
+import AuthContext from "../../store/auth-context";
 
 const Login = () => {
+  const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,14 +42,12 @@ const Login = () => {
         "http://localhost:3000/admin/login",
         obj
       );
-      if (response.status === 200) {
-        localStorage.setItem("token", response.data.token);
-        setLoggedIn(true);
-        setEmail("");
-        setPassword("");
-        setLoginSuccess(true);
-        navigate("/store");
-      }
+      authCtx.login(response.data.token);
+      setLoggedIn(true);
+      setEmail("");
+      setPassword("");
+      setLoginSuccess(true);
+      navigate("/store");
     } catch (err) {
       console.log("failed");
       setLoginSuccess(false);
@@ -95,7 +95,7 @@ const Login = () => {
             )}
             {isLogin && (
               <button type="submit" onClick={loginHandler}>
-                {loggedIn ? "LOGOUT" : "LOGIN"}
+                LOGIN
               </button>
             )}
             {!isLogin && isSignUp && (

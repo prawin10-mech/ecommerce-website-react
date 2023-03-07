@@ -62,6 +62,7 @@ const router = createBrowserRouter([
     path: "login",
     element: (
       <CartProvider>
+        <Nav />
         <Title />
         <Login />
         <Footer />
