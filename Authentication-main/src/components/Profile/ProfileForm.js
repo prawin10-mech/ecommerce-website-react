@@ -24,7 +24,6 @@ const ProfileForm = () => {
         },
       }
     );
-    console.log(data);
   };
   return (
     <form className={classes.form} onSubmit={submitHandler}>
