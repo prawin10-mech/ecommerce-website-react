@@ -7,10 +7,13 @@ const AuthProvider = (props) => {
   const userIsLoggedIn = !!token;
   const authCtx = {
     token: "",
-    addToken: (token) => {
+    login: (token) => {
       setToken(token);
     },
     isLoggedIn: userIsLoggedIn,
+    logout: () => {
+      setToken(null);
+    },
   };
   console.log(token);
   return (
