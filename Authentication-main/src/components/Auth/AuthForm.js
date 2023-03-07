@@ -29,6 +29,15 @@ const AuthForm = () => {
     }
   };
 
+  const loginHandler = async (e) => {
+    e.preventDefault();
+    const obj = { email, password };
+    setEmail("");
+    setPassword("");
+    const response = await axios.post("http://localhost:3000/admin/login", obj);
+    localStorage.setItem("token", response.data.token);
+  };
+
   console.log(error);
   return (
     <>
@@ -68,9 +77,14 @@ const AuthForm = () => {
             />
           </div>
           <div className={classes.actions}>
-            {!isSignUp && (
+            {!isLogin && (
               <button type="submit" onClick={signupHandler}>
-                {!isLogin ? "Sign Up" : "Login"}
+                Sign up
+              </button>
+            )}
+            {isLogin && (
+              <button type="submit" onClick={loginHandler}>
+                Login
               </button>
             )}
             {!isLogin && isSignUp && (
