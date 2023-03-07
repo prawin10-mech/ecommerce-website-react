@@ -1,11 +1,12 @@
 import { useState, useContext } from "react";
 import axios from "axios";
-import { Prompt } from "react-router-dom";
+import { Prompt, useHistory } from "react-router-dom";
 import AuthContext from "../../store/auth-context";
 
 import classes from "./AuthForm.module.css";
 
 const AuthForm = () => {
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
@@ -37,7 +38,8 @@ const AuthForm = () => {
     setEmail("");
     setPassword("");
     const response = await axios.post("http://localhost:3000/admin/login", obj);
-    authCtx.addToken(response.data.token);
+    authCtx.login(response.data.token);
+    history.push("/");
   };
   return (
     <>
