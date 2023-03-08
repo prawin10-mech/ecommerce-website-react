@@ -1,10 +1,22 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import CartContext from "../../store/CartContext";
+import axios from "axios";
 
 const CartItems = () => {
-  const cartCtx = useContext(CartContext);
-  let cartItems = cartCtx.items.map((cartElement) => {
+  const [items, setItems] = useState([]);
+  const cartProducts = () => {
+    const fetchData = async () => {
+      const items = await axios.get("http://localhost:3000/cart");
+      setItems(items.data);
+    };
+    fetchData();
+  };
+  useEffect(cartProducts, []);
+
+  console.log(items);
+
+  let cartItems = items.map((cartElement) => {
     return (
       <tr className="text-dark" key={cartElement.title}>
         <td>
@@ -18,7 +30,7 @@ const CartItems = () => {
         </td>
         <td>{cartElement.price}</td>
         <td>
-          {cartElement.quantity}
+          {cartElement.cartItem.quantity}
           <Button variant="danger">Delete</Button>
         </td>
       </tr>

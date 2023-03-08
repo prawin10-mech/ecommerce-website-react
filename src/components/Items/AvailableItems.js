@@ -6,48 +6,56 @@ import axios from "axios";
 const AvailableItems = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("null");
+  const [error, setError] = useState(null);
 
-  function fetchItemsHandler() {
-    setIsLoading(true);
-    setError(null);
-
+  useEffect(() => {
     const fetchData = async () => {
-      setError("null");
-      setIsLoading(false);
-      let products = await axios.get("http://localhost:3000/products");
-      products = products.data;
       setIsLoading(true);
-      console.log(products);
-      setItems(products);
-    };
-    fetchData();
-    console.log(items);
-  }
-  useEffect(fetchItemsHandler, []);
-  if (items.length > 0) {
-    const products = items.map((item) => {
-      return (
-        <ul className={classes.ul}>
-          {items.length === 0 && <li>Found no items</li>}
-          {!isLoading && <p>{error}</p>}
-          {items.length > 0 && (
-            <Product
-              key={item.id.toString()}
-              id={item.id}
-              title={item.title}
-              imageUrl={item.imageUrl}
-              price={item.price}
-              onSetItems={setItems}
-            />
-          )}
-        </ul>
-      );
-    });
+      setError(null);
 
-    return <>{products}</>;
+      try {
+        const response = await axios.get("http://localhost:3000/products");
+        setItems(response.data);
+      } catch (error) {
+        setError("An error occurred while fetching data.");
+      }
+
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  const deleteItemHandler = (productId) => {
+    setItems((prevItems) => prevItems.filter((item) => item.id !== productId));
+  };
+
+  let content;
+  if (isLoading) {
+    content = <p>Loading...</p>;
+  } else if (error) {
+    content = <p>{error}</p>;
+  } else if (items.length === 0) {
+    content = <p>Found no items</p>;
+  } else {
+    content = (
+      <ul className={classes.ul}>
+        {items.map((item) => (
+          <Product
+            key={item.id.toString()}
+            id={item.id}
+            title={item.title}
+            imageUrl={item.imageUrl}
+            price={item.price}
+            onSetItems={setItems}
+            onDeleteItem={deleteItemHandler}
+          />
+        ))}
+      </ul>
+    );
   }
-  return <p>Loading...</p>;
+
+  return <div>{content}</div>;
 };
 
 export default AvailableItems;

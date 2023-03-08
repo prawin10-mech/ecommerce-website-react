@@ -1,14 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CartContext from "./CartContext";
+import axios from "axios";
 
 const CartProvider = (props) => {
   const [items, setItems] = useState([]);
   const [quantity, setQuantity] = useState(0);
 
-  const addItemToCart = (item) => {
+  const fetchCountHandler = async () => {
+    const cartCount = await axios.get("http://localhost:3000/cart");
+    const totalQuantity = cartCount.data.reduce(
+      (total, item) => total + item.cartItem.quantity,
+      0
+    );
+    setQuantity(totalQuantity);
+  };
+
+  useEffect(() => {
+    fetchCountHandler();
+  }, [items]);
+
+  const addItemToCart = async (item) => {
     const existingCartItemIndex = items.findIndex(
       (product) => item.id === product.id
     );
+
     const existingCartItem = items[existingCartItemIndex];
     let updatedItems;
     if (existingCartItem) {
@@ -22,11 +37,6 @@ const CartProvider = (props) => {
       updatedItems = [...items, item];
     }
     setItems(updatedItems);
-    const totalQuantity = updatedItems.reduce(
-      (total, item) => total + item.quantity,
-      0
-    );
-    setQuantity(totalQuantity);
     return updatedItems;
   };
 

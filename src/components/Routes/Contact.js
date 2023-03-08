@@ -15,7 +15,7 @@ const Contact = () => {
   return (
     <form
       onSubmit={contactFormHandler}
-      className="d-flex flex-column w-50 m-auto mb-5"
+      className="d-flex flex-column w-50 m-auto mb-5 mt-5"
     >
       <label htmlFor="iname">Name: </label>
       <input

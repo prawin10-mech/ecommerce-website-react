@@ -28,6 +28,8 @@ const Login = () => {
       e.preventDefault();
       setIsSignUp(true);
       const obj = { email, password };
+      setEmail("");
+      setPassword("");
       await axios.post("http://localhost:3000/admin/signup", obj);
     } catch (err) {
       setError(true);
@@ -99,17 +101,16 @@ const Login = () => {
               </button>
             )}
             {!isLogin && isSignUp && (
-              <p className="text-primary">Sending request ...</p>
+              <p className="text-primary">Signup successfully please login</p>
             )}
-            {!isSignUp && (
-              <button
-                type="button"
-                className={classes.toggle}
-                onClick={switchAuthModeHandler}
-              >
-                {isLogin ? "Create new account" : "Login with existing account"}
-              </button>
-            )}
+
+            <button
+              type="button"
+              className={classes.toggle}
+              onClick={switchAuthModeHandler}
+            >
+              {isLogin ? "Create new account" : "Login with existing account"}
+            </button>
           </div>
         </form>
       </section>

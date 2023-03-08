@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AvailableItems from "./AvailableItems";
 import classes from "./Items.module.css";
 import axios from "axios";
@@ -8,17 +8,33 @@ import { Button } from "react-bootstrap";
 const Item = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [addItemBtn, setAddItemBtn] = useState(false);
+  const [items, setItems] = useState([]);
 
-  const fetchData = async () => {
-    setIsLoading(true);
-    let response = await axios.get("http://localhost:3000/products");
-    response = response.data.products;
-    console.log(response);
-    setIsLoading(false);
+  const newProductHandler = () => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      let response = await axios.get("http://localhost:3000/products");
+      response = response.data;
+      setItems(response);
+      setIsLoading(false);
+    };
+
+    fetchData();
   };
+
+  useEffect(newProductHandler, []);
+
   const addItemHandler = async () => {
     setAddItemBtn(true);
   };
+
+  const addItem = (item) => {
+    setItems((prevItems) => [...prevItems, item]);
+    setAddItemBtn(false);
+    return items;
+  };
+
+  console.log(items);
   return (
     <>
       {!isLoading && (
@@ -28,9 +44,9 @@ const Item = (props) => {
               Add Item
             </Button>
           )}
-          {addItemBtn && <AddItem />}
+          {addItemBtn && <AddItem onAddItem={addItem} />}
           <div className={classes.items}>
-            <AvailableItems />
+            <AvailableItems items={items} />
           </div>
         </div>
       )}

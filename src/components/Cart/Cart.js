@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CartItems from "./CartItems";
+import CartContext from "../../store/CartContext";
 
 const Cart = (props) => {
+  const cartCtx = useContext(CartContext);
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    setCartItems(cartCtx.items);
+  }, [cartCtx.items]);
+
+  const handleCartClose = () => {
+    props.onClick();
+  };
+
   return (
     <>
       <div className="position-fixed text-dark top-0 end-0 mx-4 mt-5 py-5 bg-light">
         <button
           className="position-relative text-dark top-0 end-0"
-          onClick={props.onClick}
+          onClick={handleCartClose}
         >
           X
         </button>
@@ -20,7 +32,7 @@ const Cart = (props) => {
             </tr>
           </thead>
           <tbody>
-            <CartItems />
+            <CartItems items={cartItems} />
           </tbody>
         </table>
       </div>
